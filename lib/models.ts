@@ -61,9 +61,13 @@ export interface IPortfolioContent extends Document {
     mediaPublicId: string;
     mobileMediaUrl: string;
     mobileMediaPublicId: string;
+    email: string;
+    mobile: string;
   };
   socials: {
     instagram: string;
+    whatsapp: string;
+    enableWhatsapp: boolean;
   };
 }
 
@@ -106,9 +110,13 @@ const PortfolioContentSchema = new Schema({
     mediaPublicId: String,
     mobileMediaUrl: String,
     mobileMediaPublicId: String,
+    email: { type: String, default: "hello@example.com" },
+    mobile: { type: String, default: "+1 234 567 8900" },
   },
   socials: {
-    instagram: { type: String, default: "https://instagram.com" }
+    instagram: { type: String, default: "https://instagram.com" },
+    whatsapp: { type: String, default: "https://wa.me/12345678900" },
+    enableWhatsapp: { type: Boolean, default: true },
   }
 });
 

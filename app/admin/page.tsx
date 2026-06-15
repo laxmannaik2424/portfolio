@@ -663,16 +663,80 @@ export default function AdminDashboard() {
                   </div>
                 </div>
 
-                <div className="bg-zinc-900/50 p-6 md:p-8 rounded-3xl border border-zinc-800">
-                  <label className="block text-zinc-400 font-medium mb-2">Instagram Link</label>
-                  <p className="text-sm text-zinc-500 mb-4">This controls where the floating Instagram icon redirects users.</p>
-                  <input 
-                    type="text" 
-                    value={content.socials?.instagram || ''} 
-                    onChange={e => updateNestedField(['socials', 'instagram'], e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:outline-none focus:border-zinc-600"
-                    placeholder="https://instagram.com/yourprofile"
-                  />
+                <div className="bg-zinc-900/50 p-6 md:p-8 rounded-3xl border border-zinc-800 space-y-8">
+                  
+                  <div>
+                    <h3 className="text-xl font-bold mb-4 text-white">Contact Information</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <label className="block">
+                        <span className="text-zinc-400 font-medium block mb-2">Email Address</span>
+                        <input 
+                          type="email" 
+                          value={content.footer?.email || ''} 
+                          onChange={e => updateNestedField(['footer', 'email'], e.target.value)}
+                          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:outline-none focus:border-zinc-600 transition-colors"
+                          placeholder="hello@example.com"
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="text-zinc-400 font-medium block mb-2">Mobile Number</span>
+                        <input 
+                          type="text" 
+                          value={content.footer?.mobile || ''} 
+                          onChange={e => updateNestedField(['footer', 'mobile'], e.target.value)}
+                          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:outline-none focus:border-zinc-600 transition-colors"
+                          placeholder="+1 234 567 8900"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="pt-6 border-t border-zinc-800">
+                    <h3 className="text-xl font-bold mb-4 text-white">Social Links & Toggles</h3>
+                    
+                    <div className="space-y-6">
+                      <label className="block">
+                        <span className="text-zinc-400 font-medium block mb-2">Instagram Link</span>
+                        <p className="text-sm text-zinc-500 mb-2">Controls the right-side floating button and mobile contact card.</p>
+                        <input 
+                          type="url" 
+                          value={content.socials?.instagram || ''} 
+                          onChange={e => updateNestedField(['socials', 'instagram'], e.target.value)}
+                          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:outline-none focus:border-zinc-600 transition-colors"
+                          placeholder="https://instagram.com/yourprofile"
+                        />
+                      </label>
+
+                      <label className="block">
+                        <span className="text-zinc-400 font-medium block mb-2">WhatsApp Link</span>
+                        <p className="text-sm text-zinc-500 mb-2">Controls the left-side floating button and mobile contact card.</p>
+                        <input 
+                          type="url" 
+                          value={content.socials?.whatsapp || ''} 
+                          onChange={e => updateNestedField(['socials', 'whatsapp'], e.target.value)}
+                          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:outline-none focus:border-zinc-600 transition-colors"
+                          placeholder="https://wa.me/12345678900"
+                        />
+                      </label>
+
+                      <label className="flex items-center gap-4 cursor-pointer mt-4 p-4 bg-zinc-950 rounded-xl border border-zinc-800">
+                        <div className="relative">
+                          <input 
+                            type="checkbox" 
+                            className="sr-only" 
+                            checked={content.socials?.enableWhatsapp !== false}
+                            onChange={e => updateNestedField(['socials', 'enableWhatsapp'], e.target.checked)}
+                          />
+                          <div className={`block w-14 h-8 rounded-full transition-colors ${content.socials?.enableWhatsapp !== false ? 'bg-[#25D366]' : 'bg-zinc-700'}`}></div>
+                          <div className={`absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${content.socials?.enableWhatsapp !== false ? 'translate-x-6' : ''}`}></div>
+                        </div>
+                        <div>
+                          <span className="text-white font-medium block">Enable Floating WhatsApp Button</span>
+                          <span className="text-zinc-500 text-sm">Toggle visibility of the WhatsApp icon on the landing page.</span>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
