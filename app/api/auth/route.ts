@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server';
 import { Admin } from '@/lib/models';
 import connectToDatabase from '@/lib/mongodb';

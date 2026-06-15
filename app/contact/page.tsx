@@ -23,7 +23,7 @@ export default function ContactPage() {
         
         <div className="max-w-md w-full space-y-6">
           <p className="text-lg font-medium tracking-wide">
-            Let's create something extraordinary together.
+            Let&apos;s create something extraordinary together.
           </p>
           
           <a 
