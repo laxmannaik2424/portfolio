@@ -250,7 +250,7 @@ export default function AdminDashboard() {
     setUploadState({ isOpen: true, path, oldPid });
   };
 
-  const handleUploadSave = (url: string, publicId: string) => {
+  const handleUploadSave = async (url: string, publicId: string) => {
     const newContent = { ...content };
     let current = newContent;
     for (let i = 0; i < uploadState.path.length - 1; i++) {
@@ -274,6 +274,15 @@ export default function AdminDashboard() {
     }
 
     setContent(newContent);
+    
+    // Auto-save to DB after successful upload so users don't lose media on refresh
+    try {
+      const res = await fetch('/api/content', {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newContent)
+      });
+      if (res.ok) setToastMsg('Media uploaded and automatically saved!');
+    } catch (err) { console.error(err); }
   };
 
   if (loading) return <div className="min-h-screen bg-zinc-950 text-white flex flex-col items-center justify-center"><Loader2 className="animate-spin mb-4" size={32}/><p className="text-zinc-500 font-medium tracking-widest uppercase text-sm">Loading</p></div>;
