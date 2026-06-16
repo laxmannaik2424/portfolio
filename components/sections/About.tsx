@@ -114,7 +114,7 @@ export default function About({ data }: AboutProps) {
                     {img.match(/\.(mp4|webm|ogg)$/i) ? (
                       <video 
                         src={img} 
-                        className="w-full h-full object-cover" 
+                        className="w-full h-full object-cover grayscale" 
                         autoPlay muted loop playsInline 
                       />
                     ) : (
@@ -122,7 +122,7 @@ export default function About({ data }: AboutProps) {
                         src={img}
                         alt={`Gallery image ${index + 1}`}
                         fill
-                        className="object-cover"
+                        className="object-cover grayscale"
                         sizes="(max-width: 768px) 100vw, 400px"
                       />
                     )}
