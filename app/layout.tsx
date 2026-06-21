@@ -22,6 +22,10 @@ const signatureFont = Homemade_Apple({
 import { siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://princelucky.co.in"),
+  alternates: {
+    canonical: '/',
+  },
   title: {
     default: "Prince Lucky | Mobile Videography & Cinematography in Gokak, Belagavi",
     template: `%s | Prince Lucky 42`,

@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
             value: 'on'
           },
           {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com https://res.cloudinary.com; media-src 'self' https://res.cloudinary.com; connect-src 'self' https://res.cloudinary.com wss://ws-us3.pusher.com;"
+          },
+          {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload'
           },

@@ -31,9 +31,32 @@ export default async function Home() {
   // Fallback to empty objects if content missing
   const data = content || {};
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Prince Lucky',
+    image: 'https://princelucky.co.in/icon.svg',
+    description: 'Expert mobile videographer & cinematographer based in Gokak, Belagavi, Karnataka.',
+    url: 'https://princelucky.co.in',
+    telephone: data.socials?.whatsapp ? data.socials.whatsapp.split('/').pop() : '+910000000000',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Gokak',
+      addressRegion: 'Karnataka',
+      addressCountry: 'IN'
+    },
+    sameAs: [
+      data.socials?.instagram || 'https://instagram.com/prince_lucky_42'
+    ]
+  };
+
   return (
     <ClientAppWrapper>
       <main className="w-full min-h-screen relative flex flex-col overflow-x-hidden bg-[#c0c0c0]">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Navbar />
         <Hero data={data.hero} />
         
