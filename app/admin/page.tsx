@@ -119,6 +119,7 @@ function UploadModal({ isOpen, onClose, onSave, oldPublicId }: any) {
         setLoading(false);
         setProgress(0);
       }
+    }
   };
 
   return (
