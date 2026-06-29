@@ -124,7 +124,7 @@ export default function Footer({ data, socials }: FooterProps) {
               rx="12vw" 
               ry="12vw" 
               fill="#cc0000" 
-              style={{ transform: 'translate(-20px, -10px)' }}
+              style={{ transform: 'translate(-20px, -30px)' }}
             />
             
             {/* Desktop Red Circle 
@@ -136,7 +136,7 @@ export default function Footer({ data, socials }: FooterProps) {
               rx="9vw" 
               ry="9vw" 
               fill="#cc0000" 
-              style={{ transform: 'translate(-20px, -10px)' }}
+              style={{ transform: 'translate(-20px, -30px)' }}
             />
           </g>
         </svg>
