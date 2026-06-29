@@ -83,17 +83,17 @@ export default function Footer({ data, socials }: FooterProps) {
         meaning the bottom half of the footer exposes the raw image seamlessly!
       */}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style={{ overflow: 'visible' }}>
           <defs>
             {/* ClipPath ensures the gray background and red circle STRICTLY end just above the text baseline (47.5%),
-                which completely eliminates any gray subpixel border under the flat letters (NTAT) */}
+                but we allow it to extend upwards infinitely (y="-50%") so the circles can overlap the top section */}
             <clipPath id="topHalfClip">
-              <rect width="100%" height="47.5%" />
+              <rect x="-50%" y="-50%" width="200%" height="97.5%" />
             </clipPath>
 
             <mask id="contactMask">
-              {/* White makes the mask solid (Gray layer is visible) */}
-              <rect width="100%" height="100%" fill="white" />
+              {/* White makes the mask solid. We extend it to -50% y so it doesn't mask out the top overlaps */}
+              <rect x="-50%" y="-50%" width="200%" height="200%" fill="white" />
               
               {/* Black punches a hole (Opacity 0), revealing the image underneath.
                   y="48%" acts as the exact bottom baseline of the text. */}
@@ -114,40 +114,33 @@ export default function Footer({ data, socials }: FooterProps) {
           <g mask="url(#contactMask)" clipPath="url(#topHalfClip)">
             {/* Solid Gray Background. The clipPath chops it exactly at 47.5% */}
             <rect width="100%" height="100%" fill="#c0c0c0" />
+
+            {/* Mobile Red Circle 
+                Moved upwards and leftwards via transform */}
+            <ellipse 
+              className="md:hidden"
+              cx="75%" 
+              cy="35%" 
+              rx="12vw" 
+              ry="12vw" 
+              fill="#cc0000" 
+              style={{ transform: 'translate(-20px, -10px)' }}
+            />
+            
+            {/* Desktop Red Circle 
+                Moved upwards and leftwards via transform */}
+            <ellipse 
+              className="hidden md:inline"
+              cx="74%" 
+              cy="24%" 
+              rx="9vw" 
+              ry="9vw" 
+              fill="#cc0000" 
+              style={{ transform: 'translate(-20px, -10px)' }}
+            />
           </g>
         </svg>
       </div>
-
-      {/* 
-        LAYER 2.5: Red Circles (Placed outside SVG to avoid clipping, allowing overlap with top sections)
-      */}
-      {/* Mobile Red Circle */}
-      <div 
-        className="md:hidden absolute z-20 pointer-events-none"
-        style={{
-          width: '24vw',
-          height: '24vw',
-          borderRadius: '50%',
-          backgroundColor: '#cc0000',
-          left: 'calc(75% - 20px)',
-          top: 'calc(35% - 10px)',
-          transform: 'translate(-50%, -50%)'
-        }}
-      />
-      
-      {/* Desktop Red Circle */}
-      <div 
-        className="hidden md:block absolute z-20 pointer-events-none"
-        style={{
-          width: '18vw',
-          height: '18vw',
-          borderRadius: '50%',
-          backgroundColor: '#cc0000',
-          left: 'calc(74% - 20px)',
-          top: 'calc(24% - 10px)',
-          transform: 'translate(-50%, -50%)'
-        }}
-      />
 
       {/* 
         LAYER 3: Footer Navigation 
