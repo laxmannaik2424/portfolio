@@ -29,19 +29,27 @@ export async function GET() {
       content = new PortfolioContent(defaultData);
       await content.save();
     } else {
-      // Patch any missing fields from the previous bad seed
+      // Patch any missing fields from the previous bad seed safely
       let modified = false;
       Object.keys(defaultData).forEach((key) => {
-        if (!content[key]) {
-          content[key] = (defaultData as any)[key];
+        // Mongoose documents can be safely checked using .get()
+        if (!content.get(key) || Object.keys(content.get(key)).length === 0) {
+          content.set(key, (defaultData as any)[key]);
           modified = true;
         }
       });
       if (modified) {
-        await content.save();
+        try {
+          await content.save();
+        } catch (saveErr) {
+          console.error("Failed to save patched document", saveErr);
+          // Continue anyway to serve the patched in-memory document to the client!
+        }
       }
     }
-    return NextResponse.json(content);
+    
+    // Ensure we return a plain JSON object to completely avoid Next.js serialization bugs with Mongoose docs
+    return NextResponse.json(JSON.parse(JSON.stringify(content)));
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
