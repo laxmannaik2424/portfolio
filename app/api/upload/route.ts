@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server';
 import cloudinary from '@/lib/cloudinary';
 
+export const dynamic = 'force-dynamic';
+
 // Generate signature for direct client-side upload to Cloudinary
 // This bypasses Vercel's strict 4.5MB serverless payload limit for videos!
 export async function GET() {

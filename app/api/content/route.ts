@@ -46,6 +46,33 @@ export async function GET() {
           // Continue anyway to serve the patched in-memory document to the client!
         }
       }
+
+      // ----------------------------------------------------
+      // FORCED SEED TO MATCH EXACT LANDING PAGE TEXT
+      // ----------------------------------------------------
+      const needsHeroUpdate = content.hero?.topSubheading !== "AN AWARD-WINNING\nPHOTOGRAPHER WHOSE LENS\nTRANSFORMS MOMENTS INTO\nTIMELESS MASTERPIECES";
+      const needsAboutUpdate = content.about?.description !== "DISTINGUISHED BY A MYRIAD OF\nACCOLADES AND INTERNATIONAL\nRECOGNITION, I STAND\nAS A LUMINARY IN THE REALM OF\nVISUAL STORYTELLING";
+      const needsExhibitionsUpdate = content.exhibitions?.description !== "The artist's ability to transcend\nboundaries and connect with a\nglobal audience is a testament to\nthe universal language of\nvisual storytelling";
+
+      if (needsHeroUpdate || needsAboutUpdate || needsExhibitionsUpdate) {
+        if (!content.hero) content.hero = {};
+        if (!content.about) content.about = {};
+        if (!content.exhibitions) content.exhibitions = {};
+
+        content.hero.topSubheading = "AN AWARD-WINNING\nPHOTOGRAPHER WHOSE LENS\nTRANSFORMS MOMENTS INTO\nTIMELESS MASTERPIECES";
+        content.about.description = "DISTINGUISHED BY A MYRIAD OF\nACCOLADES AND INTERNATIONAL\nRECOGNITION, I STAND\nAS A LUMINARY IN THE REALM OF\nVISUAL STORYTELLING";
+        content.exhibitions.description = "The artist's ability to transcend\nboundaries and connect with a\nglobal audience is a testament to\nthe universal language of\nvisual storytelling";
+        
+        content.markModified('hero');
+        content.markModified('about');
+        content.markModified('exhibitions');
+        
+        try {
+          await content.save();
+        } catch (e) {
+          console.error("Forced seed failed", e);
+        }
+      }
     }
     
     // Ensure we return a plain JSON object to completely avoid Next.js serialization bugs with Mongoose docs
