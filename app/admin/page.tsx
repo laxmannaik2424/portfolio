@@ -57,6 +57,16 @@ function UploadModal({ isOpen, onClose, onSave, oldPublicId }: any) {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  useEffect(() => {
+    if (isOpen) {
+      setFile(null);
+      setUrl('');
+      setLoading(false);
+      setProgress(0);
+      setTab('file');
+    }
+  }, [isOpen]);
+
   const handleSubmit = async () => {
     if (tab === 'url') {
       if (!url) return;
