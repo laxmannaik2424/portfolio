@@ -60,28 +60,19 @@ function UploadModal({ isOpen, onClose, onSave, oldPublicId }: any) {
   const handleSubmit = async () => {
     if (tab === 'url') {
       if (!url) return;
-      onSave(url, ''); // No public_id for URLs
+      onSave(url);
       onClose();
     } else {
       if (!file) return;
       setLoading(true);
-      
+      setProgress(10);
       try {
-        // 1. Get Signature
-        const sigRes = await fetch('/api/upload');
-        const sigData = await sigRes.json();
-        if (!sigRes.ok) throw new Error("Failed to get signature");
-
-        // 2. Upload directly to Cloudinary bypassing Vercel limits using XHR for progress tracking
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('api_key', sigData.apiKey);
-        formData.append('timestamp', sigData.timestamp);
-        formData.append('signature', sigData.signature);
-        formData.append('folder', 'squidwod_portfolio');
-        
+        if (oldPublicId) formData.append('oldPublicId', oldPublicId);
+
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', `https://api.cloudinary.com/v1_1/${sigData.cloudName}/auto/upload`);
+        xhr.open('POST', '/api/upload');
         
         xhr.upload.onprogress = (event) => {
           if (event.lengthComputable) {
@@ -91,31 +82,34 @@ function UploadModal({ isOpen, onClose, onSave, oldPublicId }: any) {
 
         xhr.onload = () => {
           if (xhr.status === 200) {
-            const uploadData = JSON.parse(xhr.responseText);
-            // 3. Delete old file if exists
-            if (oldPublicId) {
-              fetch(`/api/upload?publicId=${oldPublicId}`, { method: 'DELETE' }).catch(console.error);
+            const data = JSON.parse(xhr.responseText);
+            if (data.url) {
+              onSave(data.url, data.public_id);
+              onClose();
+            } else {
+              console.error("No url returned", data);
+              alert("Upload failed. Please try again.");
+              setLoading(false);
+              setProgress(0);
             }
-            onSave(uploadData.secure_url, uploadData.public_id);
-            onClose();
           } else {
-            console.error("Cloudinary error:", xhr.responseText);
-            alert("Upload failed. Please try again.");
+            console.error("Upload proxy error:", xhr.responseText);
+            alert("Upload failed. The server might be blocking large files or the network dropped.");
+            setLoading(false);
+            setProgress(0);
           }
-          setLoading(false);
-          setProgress(0);
         };
 
         xhr.onerror = () => {
-          console.error("Upload error");
-          alert("Network error during upload.");
+          console.error("Upload network error");
+          alert("Network error during upload. Please check your connection.");
           setLoading(false);
           setProgress(0);
         };
 
         xhr.send(formData);
       } catch (e) {
-        console.error("Upload signature error", e);
+        console.error("Upload error", e);
         setLoading(false);
         setProgress(0);
       }
