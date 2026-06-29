@@ -9,9 +9,19 @@ export async function GET() {
   try {
     await connectToDatabase();
     // Assuming there is only one settings document
-    const content = await PortfolioContent.findOne();
+    let content = await PortfolioContent.findOne();
     if (!content) {
-      return NextResponse.json({ error: 'Content not found' }, { status: 404 });
+      // Auto-seed if it doesn't exist so the admin panel doesn't crash
+      content = new PortfolioContent({
+        hero: { heading: "Welcome", subheading: "Update this text in admin panel" },
+        about: { title: "About", description: "", text: "", image: "", stats: [] },
+        works: { title: "Works", description: "", list: [] },
+        services: { title: "Services", description: "", list: [] },
+        exhibitions: { title: "Exhibitions", description: "", list: [] },
+        footer: { text: "© 2026", email: "", phone: "", address: "" },
+        socials: { instagram: "", whatsapp: "", youtube: "" }
+      });
+      await content.save();
     }
     return NextResponse.json(content);
   } catch (error: any) {
@@ -25,15 +35,15 @@ export async function PUT(request: Request) {
     const data = await request.json();
 
     // Since we only have one document, we just update the first one we find
-    const content = await PortfolioContent.findOne();
+    let content = await PortfolioContent.findOne();
     
     if (!content) {
-      return NextResponse.json({ error: 'Content not found' }, { status: 404 });
+      content = new PortfolioContent(data);
+      await content.save();
+      return NextResponse.json(content);
     }
 
     // Update document with new data
-    // Deep merge or overwrite fields based on the payload structure
-    // The payload should be the complete object from the client
     const updated = await PortfolioContent.findOneAndUpdate(
       { _id: content._id },
       { $set: data },
