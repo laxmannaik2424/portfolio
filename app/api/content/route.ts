@@ -70,6 +70,10 @@ export async function PUT(request: Request) {
     }
 
     // Update document with new data
+    // Remove immutable fields from payload to prevent MongoServerError
+    delete data._id;
+    delete data.__v;
+
     const updated = await PortfolioContent.findOneAndUpdate(
       { _id: content._id },
       { $set: data },

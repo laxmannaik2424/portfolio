@@ -19,7 +19,7 @@ export default function Exhibitions({ data }: ExhibitionsProps) {
 
   const year = data?.year || "2024"
   const title = data?.title || "My Exhibitions"
-  const descriptionLines = (data?.description || "The artist's ability to transcend\nboundaries and connect with a\nglobal audience is a testament to\nthe universal language of squidwod\nvisual storytelling").split('\n')
+  const descriptionLines = (data?.description || "The artist's ability to transcend\nboundaries and connect with a\nglobal audience is a testament to\nthe universal language of\nvisual storytelling").split('\n')
 
   const defaultExhibitionsData = [
     { text: "MADRID, JAN 2024\nFEEL FREE PHOTOGRAPHY", image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1600&grayscale=true" },
@@ -123,18 +123,16 @@ export default function Exhibitions({ data }: ExhibitionsProps) {
             
             {/* Overlays (Bottom Right) */}
             <div className="absolute bottom-4 right-4 md:bottom-10 md:right-10 flex flex-col items-end z-10 pointer-events-none">
-              <div className="mb-2 md:mb-6 text-white/90">
-                <p className="font-['Brush_Script_MT','Brush_Script_Std',cursive] text-4xl md:text-7xl tracking-widest italic drop-shadow-lg">
-                  Squidwod
-                </p>
-              </div>
-              
               <p className="text-white text-[9px] md:text-sm font-bold tracking-widest uppercase mb-1 drop-shadow-md">
                 {current.location}
               </p>
               <p className="text-white/60 text-[6px] md:text-[9px] font-semibold tracking-[0.2em] uppercase">
                 {current.studio}
               </p>
+            </div>
+            
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 origin-right text-[10px] md:text-xs font-medium tracking-[0.2em] uppercase text-black bg-white/80 px-2 py-1 rounded">
+              Exhibition
             </div>
           </motion.div>
         </AnimatePresence>

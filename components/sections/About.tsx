@@ -23,7 +23,7 @@ export interface AboutProps {
 
 export default function About({ data }: AboutProps) {
   const title = data?.title || "About Me"
-  const descriptionLines = (data?.description || "DISTINGUISHED BY A MYRIAD OF\nACCOLADES AND INTERNATIONAL\nRECOGNITION, SQUIDWOD STANDS\nAS A LUMINARY IN THE REALM OF\nVISUAL STORYTELLING").split('\n')
+  const descriptionLines = (data?.description || "DISTINGUISHED BY A MYRIAD OF\nACCOLADES AND INTERNATIONAL\nRECOGNITION, I STAND\nAS A LUMINARY IN THE REALM OF\nVISUAL STORYTELLING").split('\n')
   const IMAGES = data?.mediaList?.map(m => m?.url) || [
     "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800&grayscale=true",
     "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=800&grayscale=true",

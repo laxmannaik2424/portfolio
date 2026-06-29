@@ -55,6 +55,7 @@ function UploadModal({ isOpen, onClose, onSave, oldPublicId }: any) {
   const [file, setFile] = useState<File|null>(null);
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const handleSubmit = async () => {
     if (tab === 'url') {
@@ -71,7 +72,7 @@ function UploadModal({ isOpen, onClose, onSave, oldPublicId }: any) {
         const sigData = await sigRes.json();
         if (!sigRes.ok) throw new Error("Failed to get signature");
 
-        // 2. Upload directly to Cloudinary bypassing Vercel limits
+        // 2. Upload directly to Cloudinary bypassing Vercel limits using XHR for progress tracking
         const formData = new FormData();
         formData.append('file', file);
         formData.append('api_key', sigData.apiKey);
@@ -79,28 +80,45 @@ function UploadModal({ isOpen, onClose, onSave, oldPublicId }: any) {
         formData.append('signature', sigData.signature);
         formData.append('folder', 'squidwod_portfolio');
         
-        const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${sigData.cloudName}/auto/upload`, {
-          method: 'POST',
-          body: formData
-        });
-        const uploadData = await uploadRes.json();
-
-        if (uploadRes.ok) {
-          // 3. Delete old file if exists
-          if (oldPublicId) {
-            fetch(`/api/upload?publicId=${oldPublicId}`, { method: 'DELETE' }).catch(console.error);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://api.cloudinary.com/v1_1/${sigData.cloudName}/auto/upload`);
+        
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            setProgress(Math.round((event.loaded / event.total) * 100));
           }
-          
-          onSave(uploadData.secure_url, uploadData.public_id);
-          onClose();
-        } else {
-          console.error("Cloudinary error:", uploadData);
-        }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const uploadData = JSON.parse(xhr.responseText);
+            // 3. Delete old file if exists
+            if (oldPublicId) {
+              fetch(`/api/upload?publicId=${oldPublicId}`, { method: 'DELETE' }).catch(console.error);
+            }
+            onSave(uploadData.secure_url, uploadData.public_id);
+            onClose();
+          } else {
+            console.error("Cloudinary error:", xhr.responseText);
+            alert("Upload failed. Please try again.");
+          }
+          setLoading(false);
+          setProgress(0);
+        };
+
+        xhr.onerror = () => {
+          console.error("Upload error");
+          alert("Network error during upload.");
+          setLoading(false);
+          setProgress(0);
+        };
+
+        xhr.send(formData);
       } catch (e) {
-        console.error("Upload error", e);
+        console.error("Upload signature error", e);
+        setLoading(false);
+        setProgress(0);
       }
-      setLoading(false);
-    }
   };
 
   return (
@@ -146,10 +164,17 @@ function UploadModal({ isOpen, onClose, onSave, oldPublicId }: any) {
                 <button 
                   onClick={handleSubmit} 
                   disabled={loading || (tab === 'file' ? !file : !url)}
-                  className="flex-1 py-3 rounded-xl bg-white text-black hover:bg-zinc-200 font-bold transition flex justify-center items-center disabled:opacity-50"
+                  className="flex-1 py-3 rounded-xl bg-white text-black hover:bg-zinc-200 font-bold transition flex justify-center items-center disabled:opacity-50 relative overflow-hidden group"
                 >
-                  {loading ? <Loader2 className="animate-spin mr-2" size={20} /> : null}
-                  {loading ? (file?.type.startsWith('video') ? "Uploading Video (This takes time)..." : "Uploading...") : "Save Media"}
+                  {loading && tab === 'file' && (
+                    <div className="absolute left-0 top-0 bottom-0 bg-green-400/20 transition-all duration-300" style={{ width: `${progress}%` }} />
+                  )}
+                  <div className="relative z-10 flex items-center">
+                    {loading ? <Loader2 className="animate-spin mr-2" size={20} /> : null}
+                    {loading ? (
+                      tab === 'file' ? (progress > 0 ? `Uploading... ${progress}%` : "Starting upload...") : "Saving..."
+                    ) : "Save Media"}
+                  </div>
                 </button>
               </div>
             </div>

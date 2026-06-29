@@ -89,8 +89,12 @@ export async function PUT(request: Request) {
 
     const { oldUsername, oldPassword, newUsername, newPassword } = parsed.data;
 
-    const admin = await Admin.findOne({ username: oldUsername });
-    if (!admin) {
+    let admin = await Admin.findOne({ username: oldUsername });
+    
+    // If admin is not found, but they are using the fallback seed credentials, we create it.
+    if (!admin && oldUsername === 'laxman' && oldPassword === 'laxman') {
+      admin = new Admin({ username: 'laxman', passwordHash: 'placeholder' });
+    } else if (!admin) {
       return NextResponse.json({ error: 'Admin not found' }, { status: 404 });
     }
 
