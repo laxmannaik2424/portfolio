@@ -475,10 +475,13 @@ export default function AdminDashboard() {
                       {/* Mobile */}
                       <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
                         <div className="w-24 h-40 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['hero', 'mobileMediaUrl'], content?.hero?.mobileMediaPublicId)}>
-                          {content?.hero?.mobileMediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
-                            ? <video src={content?.hero?.mobileMediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
-                            : <img src={content?.hero?.mobileMediaUrl || content?.hero?.mediaUrl} className="w-full h-full object-cover" alt="Hero Mobile Media" />
-                          }
+                          {content?.hero?.mobileMediaUrl ? (
+                            content.hero.mobileMediaUrl.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
+                              ? <video src={content.hero.mobileMediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
+                              : <img src={content.hero.mobileMediaUrl} className="w-full h-full object-cover" alt="Hero Mobile Media" />
+                          ) : (
+                            <div className="w-full h-full flex flex-col items-center justify-center text-zinc-600 text-[10px] uppercase font-bold text-center px-2">No Mobile Image</div>
+                          )}
                           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"><Upload size={24}/></div>
                         </div>
                         <div className="flex-1 space-y-2">
@@ -802,10 +805,13 @@ export default function AdminDashboard() {
                     {/* Mobile */}
                     <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
                       <div className="w-24 h-40 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['footer', 'mobileMediaUrl'], content?.footer?.mobileMediaPublicId)}>
-                        {content?.footer?.mobileMediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
-                          ? <video src={content?.footer?.mobileMediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
-                          : <img src={content?.footer?.mobileMediaUrl || content?.footer?.mediaUrl} className="w-full h-full object-cover" alt="Footer Mobile Media" />
-                        }
+                        {content?.footer?.mobileMediaUrl ? (
+                          content.footer.mobileMediaUrl.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
+                            ? <video src={content.footer.mobileMediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
+                            : <img src={content.footer.mobileMediaUrl} className="w-full h-full object-cover" alt="Footer Mobile Media" />
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center text-zinc-600 text-[10px] uppercase font-bold text-center px-2">No Mobile Image</div>
+                        )}
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"><Upload size={24}/></div>
                       </div>
                       <div className="flex-1 space-y-2">

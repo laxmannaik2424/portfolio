@@ -25,8 +25,8 @@ export default function Hero({ data }: HeroProps) {
   const mediaUrl = data?.mediaUrl || "/hero.jpeg"
   const isVideo = mediaUrl.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i)
   
-  const mobileMediaUrl = data?.mobileMediaUrl || mediaUrl
-  const isMobileVideo = mobileMediaUrl.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i)
+  const mobileMediaUrl = data?.mobileMediaUrl || ""
+  const isMobileVideo = mobileMediaUrl ? mobileMediaUrl.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) : false
 
   return (
     <section 

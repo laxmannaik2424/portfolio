@@ -21,11 +21,11 @@ export default function Footer({ data, socials }: FooterProps) {
   const mediaUrl = data?.mediaUrl || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1600&grayscale=true"
   const isVideo = mediaUrl.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i)
   
-  const mobileMediaUrl = data?.mobileMediaUrl || mediaUrl
-  const isMobileVideo = mobileMediaUrl.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i)
+  const mobileMediaUrl = data?.mobileMediaUrl || ""
+  const isMobileVideo = mobileMediaUrl ? mobileMediaUrl.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) : false
 
   return (
-    <footer id="contact" className="relative w-full min-h-[50vh] md:min-h-[70vh] bg-black overflow-hidden flex flex-col justify-end">
+    <footer id="contact" className="relative w-full min-h-[50vh] md:min-h-[70vh] bg-black flex flex-col justify-end">
       
       {/* 
         LAYER 1: The Wide Angled Image 
@@ -53,19 +53,25 @@ export default function Footer({ data, socials }: FooterProps) {
 
         {/* Mobile Media */}
         <div className="block md:hidden w-full h-full absolute inset-0">
-          {isMobileVideo ? (
-            <video 
-              src={mobileMediaUrl}
-              className="w-full h-full object-cover object-center grayscale"
-              autoPlay muted loop playsInline
-            />
+          {mobileMediaUrl ? (
+            isMobileVideo ? (
+              <video 
+                src={mobileMediaUrl}
+                className="w-full h-full object-cover object-center grayscale"
+                autoPlay muted loop playsInline
+              />
+            ) : (
+              <Image 
+                src={mobileMediaUrl} 
+                alt="Contact Background Mobile" 
+                fill 
+                className="object-cover object-center grayscale"
+              />
+            )
           ) : (
-            <Image 
-              src={mobileMediaUrl} 
-              alt="Contact Background Mobile" 
-              fill 
-              className="object-cover object-center grayscale"
-            />
+            <div className="w-full h-full bg-zinc-900 flex items-center justify-center text-zinc-700 text-xs tracking-widest uppercase">
+              No Mobile Media
+            </div>
           )}
         </div>
       </div>
@@ -108,31 +114,40 @@ export default function Footer({ data, socials }: FooterProps) {
           <g mask="url(#contactMask)" clipPath="url(#topHalfClip)">
             {/* Solid Gray Background. The clipPath chops it exactly at 47.5% */}
             <rect width="100%" height="100%" fill="#c0c0c0" />
-            
-            {/* Mobile Red Circle 
-                Increased size (12vw), moved downwards (cy 35%) */}
-            <ellipse 
-              className="md:hidden"
-              cx="75%" 
-              cy="35%" 
-              rx="12vw" 
-              ry="12vw" 
-              fill="#cc0000" 
-            />
-            
-            {/* Desktop Red Circle 
-                Increased size (9vw), moved upwards (cy 24%) */}
-            <ellipse 
-              className="hidden md:inline"
-              cx="74%" 
-              cy="24%" 
-              rx="9vw" 
-              ry="9vw" 
-              fill="#cc0000" 
-            />
           </g>
         </svg>
       </div>
+
+      {/* 
+        LAYER 2.5: Red Circles (Placed outside SVG to avoid clipping, allowing overlap with top sections)
+      */}
+      {/* Mobile Red Circle */}
+      <div 
+        className="md:hidden absolute z-20 pointer-events-none"
+        style={{
+          width: '24vw',
+          height: '24vw',
+          borderRadius: '50%',
+          backgroundColor: '#cc0000',
+          left: 'calc(75% - 20px)',
+          top: 'calc(35% - 10px)',
+          transform: 'translate(-50%, -50%)'
+        }}
+      />
+      
+      {/* Desktop Red Circle */}
+      <div 
+        className="hidden md:block absolute z-20 pointer-events-none"
+        style={{
+          width: '18vw',
+          height: '18vw',
+          borderRadius: '50%',
+          backgroundColor: '#cc0000',
+          left: 'calc(74% - 20px)',
+          top: 'calc(24% - 10px)',
+          transform: 'translate(-50%, -50%)'
+        }}
+      />
 
       {/* 
         LAYER 3: Footer Navigation 
