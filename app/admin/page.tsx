@@ -418,10 +418,10 @@ export default function AdminDashboard() {
               <div className="space-y-6">
                 <div className="bg-zinc-900/50 p-6 md:p-8 rounded-3xl border border-zinc-800">
                   <label className="block mb-6"><span className="text-zinc-400 font-medium block mb-3">Top Subheading</span>
-                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-32" value={content.hero.topSubheading} onChange={e => updateNestedField(['hero', 'topSubheading'], e.target.value)} />
+                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-32" value={content?.hero?.topSubheading || ''} onChange={e => updateNestedField(['hero', 'topSubheading'], e.target.value)} />
                   </label>
                   <label className="block mb-6"><span className="text-zinc-400 font-medium block mb-3">Signature Subtext</span>
-                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-24" value={content.hero.signatureSubtext} onChange={e => updateNestedField(['hero', 'signatureSubtext'], e.target.value)} />
+                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-24" value={content?.hero?.signatureSubtext || ''} onChange={e => updateNestedField(['hero', 'signatureSubtext'], e.target.value)} />
                   </label>
                   <div className="pt-6 border-t border-zinc-800">
                     <span className="text-zinc-400 font-medium block mb-4">Background Media</span>
@@ -429,10 +429,10 @@ export default function AdminDashboard() {
                     <div className="flex flex-col gap-8">
                       {/* Desktop */}
                       <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                        <div className="w-40 h-40 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['hero', 'mediaUrl'], content.hero.mediaPublicId)}>
-                          {content.hero.mediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
-                            ? <video src={content.hero.mediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
-                            : <img src={content.hero.mediaUrl} className="w-full h-full object-cover" alt="Hero Media" />
+                        <div className="w-40 h-40 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['hero', 'mediaUrl'], content?.hero?.mediaPublicId)}>
+                          {content?.hero?.mediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
+                            ? <video src={content?.hero?.mediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
+                            : <img src={content?.hero?.mediaUrl} className="w-full h-full object-cover" alt="Hero Media" />
                           }
                           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"><Upload size={24}/></div>
                         </div>
@@ -444,10 +444,10 @@ export default function AdminDashboard() {
 
                       {/* Mobile */}
                       <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                        <div className="w-24 h-40 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['hero', 'mobileMediaUrl'], content.hero.mobileMediaPublicId)}>
-                          {content.hero.mobileMediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
-                            ? <video src={content.hero.mobileMediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
-                            : <img src={content.hero.mobileMediaUrl || content.hero.mediaUrl} className="w-full h-full object-cover" alt="Hero Mobile Media" />
+                        <div className="w-24 h-40 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['hero', 'mobileMediaUrl'], content?.hero?.mobileMediaPublicId)}>
+                          {content?.hero?.mobileMediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
+                            ? <video src={content?.hero?.mobileMediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
+                            : <img src={content?.hero?.mobileMediaUrl || content?.hero?.mediaUrl} className="w-full h-full object-cover" alt="Hero Mobile Media" />
                           }
                           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"><Upload size={24}/></div>
                         </div>
@@ -470,14 +470,14 @@ export default function AdminDashboard() {
                 <div className="bg-zinc-900/50 p-6 md:p-8 rounded-3xl border border-zinc-800">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <label className="block"><span className="text-zinc-400 font-medium block mb-3">Year</span>
-                      <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content.works.year} onChange={e => updateNestedField(['works', 'year'], e.target.value)} />
+                      <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content?.works?.year || ''} onChange={e => updateNestedField(['works', 'year'], e.target.value)} />
                     </label>
                     <label className="block"><span className="text-zinc-400 font-medium block mb-3">Title</span>
-                      <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content.works.title} onChange={e => updateNestedField(['works', 'title'], e.target.value)} />
+                      <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content?.works?.title || ''} onChange={e => updateNestedField(['works', 'title'], e.target.value)} />
                     </label>
                   </div>
                   <label className="block mb-8"><span className="text-zinc-400 font-medium block mb-3">Description</span>
-                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-32" value={content.works.description} onChange={e => updateNestedField(['works', 'description'], e.target.value)} />
+                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-32" value={content?.works?.description || ''} onChange={e => updateNestedField(['works', 'description'], e.target.value)} />
                   </label>
                   
                   <div className="pt-6 border-t border-zinc-800">
@@ -494,10 +494,10 @@ export default function AdminDashboard() {
                         >
                           <ArrowLeft size={16} />
                         </button>
-                        <span className="text-sm font-medium">Grid {currentAdminGridIndex + 1} of {content.works.grids?.length || 1}</span>
+                        <span className="text-sm font-medium">Grid {currentAdminGridIndex + 1} of {content?.works?.grids?.length || 1}</span>
                         <button 
                           onClick={() => setCurrentAdminGridIndex(Math.min((content.works.grids?.length || 1) - 1, currentAdminGridIndex + 1))}
-                          disabled={currentAdminGridIndex >= (content.works.grids?.length || 1) - 1}
+                          disabled={currentAdminGridIndex >= (content?.works?.grids?.length || 1) - 1}
                           className="p-2 bg-zinc-900 rounded-lg hover:bg-zinc-800 disabled:opacity-50"
                         >
                           <ArrowRight size={16} />
@@ -505,7 +505,7 @@ export default function AdminDashboard() {
                         <div className="flex items-center ml-2 gap-2">
                           <button 
                             onClick={() => {
-                              const newGrids = [...(content.works.grids || [])];
+                              const newGrids = [...(content?.works?.grids || [])];
                               newGrids.push({ mediaList: [] });
                               updateNestedField(['works', 'grids'], newGrids);
                               setCurrentAdminGridIndex(newGrids.length - 1);
@@ -517,16 +517,16 @@ export default function AdminDashboard() {
                           
                           <button 
                             onClick={() => {
-                              if (!content.works.grids || content.works.grids.length <= 1) {
+                              if (!content?.works?.grids || content?.works?.grids?.length <= 1) {
                                 alert("You cannot delete the last grid. Just replace its images.");
                                 return;
                               }
-                              const newGrids = [...content.works.grids];
+                              const newGrids = [...(content?.works?.grids || [])];
                               newGrids.splice(currentAdminGridIndex, 1);
                               updateNestedField(['works', 'grids'], newGrids);
                               setCurrentAdminGridIndex(Math.max(0, currentAdminGridIndex - 1));
                             }}
-                            disabled={!content.works.grids || content.works.grids.length <= 1}
+                            disabled={!content?.works?.grids || content?.works?.grids?.length <= 1}
                             className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-950/30 rounded-lg transition disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-zinc-500"
                             title="Delete current grid"
                           >
@@ -549,7 +549,7 @@ export default function AdminDashboard() {
                         { col: 'col-span-1', aspect: 'aspect-square' }, // 6: Tower
                         { col: 'col-span-2', aspect: 'aspect-[2/1]' }  // 7: Wide Silhouette
                       ].map((cell, idx) => {
-                        const currentGrid = content.works.grids?.[currentAdminGridIndex] || { mediaList: [] };
+                        const currentGrid = content?.works?.grids?.[currentAdminGridIndex] || { mediaList: [] };
                         const media = currentGrid.mediaList?.[idx] || { url: '', publicId: '' };
                         const isVideo = media.url?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i);
                         
@@ -583,10 +583,10 @@ export default function AdminDashboard() {
             {activeTab === 'About' && (
               <div className="bg-zinc-900/50 p-6 md:p-8 rounded-3xl border border-zinc-800 space-y-6">
                 <label className="block mb-6"><span className="text-zinc-400 font-medium block mb-3">Title</span>
-                  <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content.about.title} onChange={e => updateNestedField(['about', 'title'], e.target.value)} />
+                  <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content?.about?.title || ''} onChange={e => updateNestedField(['about', 'title'], e.target.value)} />
                 </label>
                 <label className="block mb-6"><span className="text-zinc-400 font-medium block mb-3">Description</span>
-                  <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-48" value={content.about.description} onChange={e => updateNestedField(['about', 'description'], e.target.value)} />
+                  <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-48" value={content?.about?.description || ''} onChange={e => updateNestedField(['about', 'description'], e.target.value)} />
                 </label>
 
                 <div className="pt-6 border-t border-zinc-800">
@@ -594,7 +594,7 @@ export default function AdminDashboard() {
                     <span className="text-zinc-300 font-medium block">Media Stack (Images & Videos)</span>
                     <button 
                       onClick={() => {
-                        const newList = [...(content.about.mediaList || [])];
+                        const newList = [...(content?.about?.mediaList || [])];
                         newList.push({ url: '', publicId: '' });
                         updateNestedField(['about', 'mediaList'], newList);
                       }}
@@ -605,7 +605,7 @@ export default function AdminDashboard() {
                   </div>
                   
                   <div className="space-y-4">
-                    {content.about.mediaList?.map((item: any, idx: number) => {
+                    {content?.about?.mediaList?.map((item: any, idx: number) => {
                       const isVideo = item?.url?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i);
                       return (
                         <div key={idx} className="flex items-center gap-4 bg-zinc-950 p-4 rounded-xl border border-zinc-900">
@@ -627,7 +627,7 @@ export default function AdminDashboard() {
 
                           <button 
                             onClick={() => {
-                              const newList = [...content.about.mediaList];
+                              const newList = [...(content?.about?.mediaList || [])];
                               newList.splice(idx, 1);
                               updateNestedField(['about', 'mediaList'], newList);
                             }}
@@ -638,7 +638,7 @@ export default function AdminDashboard() {
                         </div>
                       )
                     })}
-                    {(!content.about.mediaList || content.about.mediaList.length === 0) && (
+                    {(!content?.about?.mediaList || content?.about?.mediaList?.length === 0) && (
                       <p className="text-sm text-zinc-500 text-center py-8 border border-dashed border-zinc-800 rounded-xl">No media items added yet.</p>
                     )}
                   </div>
@@ -650,13 +650,13 @@ export default function AdminDashboard() {
               <div className="space-y-6">
                 <div className="bg-zinc-900/50 p-6 md:p-8 rounded-3xl border border-zinc-800">
                   <label className="block mb-8"><span className="text-zinc-400 font-medium block mb-3">Description</span>
-                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-32" value={content.services.description} onChange={e => updateNestedField(['services', 'description'], e.target.value)} />
+                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-32" value={content?.services?.description || ''} onChange={e => updateNestedField(['services', 'description'], e.target.value)} />
                   </label>
                   
                   <div className="pt-6 border-t border-zinc-800">
                     <span className="text-zinc-300 font-medium mb-6 block">Services List</span>
                     <div className="space-y-4">
-                      {content.services.list?.map((item: any, idx: number) => (
+                      {content?.services?.list?.map((item: any, idx: number) => (
                         <div key={idx} className="flex flex-col md:flex-row items-center gap-4 bg-zinc-950 p-4 rounded-xl border border-zinc-900">
                           <div 
                             className="w-full md:w-32 h-20 bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 relative group cursor-pointer shrink-0"
@@ -688,14 +688,14 @@ export default function AdminDashboard() {
                 <div className="bg-zinc-900/50 p-6 md:p-8 rounded-3xl border border-zinc-800">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <label className="block"><span className="text-zinc-400 font-medium block mb-3">Year</span>
-                      <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content.exhibitions.year} onChange={e => updateNestedField(['exhibitions', 'year'], e.target.value)} />
+                      <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content?.exhibitions?.year || ''} onChange={e => updateNestedField(['exhibitions', 'year'], e.target.value)} />
                     </label>
                     <label className="block"><span className="text-zinc-400 font-medium block mb-3">Title</span>
-                      <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content.exhibitions.title} onChange={e => updateNestedField(['exhibitions', 'title'], e.target.value)} />
+                      <input type="text" className="w-full p-4 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors" value={content?.exhibitions?.title || ''} onChange={e => updateNestedField(['exhibitions', 'title'], e.target.value)} />
                     </label>
                   </div>
                   <label className="block mb-8"><span className="text-zinc-400 font-medium block mb-3">Description</span>
-                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-32" value={content.exhibitions.description} onChange={e => updateNestedField(['exhibitions', 'description'], e.target.value)} />
+                    <textarea className="w-full p-5 bg-zinc-950 border border-zinc-800 rounded-xl outline-none focus:border-white transition-colors h-32" value={content?.exhibitions?.description || ''} onChange={e => updateNestedField(['exhibitions', 'description'], e.target.value)} />
                   </label>
                   
                   <div className="pt-6 border-t border-zinc-800">
@@ -703,7 +703,7 @@ export default function AdminDashboard() {
                       <span className="text-zinc-300 font-medium">Exhibitions List</span>
                       <button 
                         onClick={() => {
-                          const newList = [...(content.exhibitions.list || [])];
+                          const newList = [...(content?.exhibitions?.list || [])];
                           newList.push({ text: "NEW LOCATION\nNEW STUDIO", mediaUrl: "", publicId: "" });
                           updateNestedField(['exhibitions', 'list'], newList);
                         }}
@@ -713,11 +713,11 @@ export default function AdminDashboard() {
                       </button>
                     </div>
                     <div className="space-y-4">
-                      {content.exhibitions.list?.map((item: any, idx: number) => (
+                      {content?.exhibitions?.list?.map((item: any, idx: number) => (
                         <div key={idx} className="flex flex-col md:flex-row items-start gap-4 bg-zinc-950 p-4 rounded-xl border border-zinc-900 relative">
                           <button 
                             onClick={() => {
-                              const newList = content.exhibitions.list.filter((_: any, i: number) => i !== idx);
+                              const newList = (content?.exhibitions?.list || []).filter((_: any, i: number) => i !== idx);
                               updateNestedField(['exhibitions', 'list'], newList);
                             }}
                             className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-500 z-40"
@@ -756,10 +756,10 @@ export default function AdminDashboard() {
                   <div className="flex flex-col gap-8">
                     {/* Desktop */}
                     <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                      <div className="w-full sm:w-64 aspect-video rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['footer', 'mediaUrl'], content.footer.mediaPublicId)}>
-                        {content.footer.mediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
-                          ? <video src={content.footer.mediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
-                          : <img src={content.footer.mediaUrl} className="w-full h-full object-cover" alt="Footer Media" />
+                      <div className="w-full sm:w-64 aspect-video rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['footer', 'mediaUrl'], content?.footer?.mediaPublicId)}>
+                        {content?.footer?.mediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
+                          ? <video src={content?.footer?.mediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
+                          : <img src={content?.footer?.mediaUrl} className="w-full h-full object-cover" alt="Footer Media" />
                         }
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"><Upload size={24}/></div>
                       </div>
@@ -771,10 +771,10 @@ export default function AdminDashboard() {
 
                     {/* Mobile */}
                     <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                      <div className="w-24 h-40 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['footer', 'mobileMediaUrl'], content.footer.mobileMediaPublicId)}>
-                        {content.footer.mobileMediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
-                          ? <video src={content.footer.mobileMediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
-                          : <img src={content.footer.mobileMediaUrl || content.footer.mediaUrl} className="w-full h-full object-cover" alt="Footer Mobile Media" />
+                      <div className="w-24 h-40 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 relative group cursor-pointer shrink-0" onClick={() => openUploader(['footer', 'mobileMediaUrl'], content?.footer?.mobileMediaPublicId)}>
+                        {content?.footer?.mobileMediaUrl?.match(/(\/video\/upload\/|\.(mp4|webm|ogg|mov|avi|mkv|qt)$)/i) 
+                          ? <video src={content?.footer?.mobileMediaUrl} className="w-full h-full object-cover" autoPlay muted loop />
+                          : <img src={content?.footer?.mobileMediaUrl || content?.footer?.mediaUrl} className="w-full h-full object-cover" alt="Footer Mobile Media" />
                         }
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"><Upload size={24}/></div>
                       </div>
